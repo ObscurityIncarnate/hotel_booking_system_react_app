@@ -2,7 +2,9 @@ import './Login.css'
 import { signInService } from '../../../services/auth'
 import { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
+import { getUserFromToken, setToken, getToken } from '../../utils/token'
 function Login() {
+    const { setUser } = useContext(UserContext)
     const [errorData, setErrorData] = useState({})
     const [formData, setFormData] = useState({
         password: "",
@@ -12,6 +14,9 @@ function Login() {
         try {
             e.preventDefault()
             const response = await signInService(formData)
+            const token = response.data
+            if (token) setToken(token)
+            setUser(getUserFromToken())
         } catch (error) {
             if (error.response.status == 500) {
                 toast("Something went wrong please try again")
