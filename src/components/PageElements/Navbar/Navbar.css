@@ -1,0 +1,28 @@
+header{
+    position: sticky;
+    display: flex;
+    top: 0;
+    margin: 0;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width:  100%;
+    background-color: black;
+    padding:  30px;
+    box-sizing: border-box;
+}
+.logo img{
+    width: 50px;
+    height: 50px;
+}
+
+#lhs_navbar{
+    display: flex;
+    flex-direction: row;
+    
+}
+#signed-out-options{
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+}
