@@ -1,15 +1,20 @@
 import './Login.css'
 import { signInService } from '../../../services/auth'
-import { useState } from 'react'
+import { useState, useContext} from 'react'
 import { ToastContainer, toast } from 'react-toastify'
-import { getUserFromToken, setToken, getToken } from '../../utils/token'
+import { getUserFromToken, setToken, getToken } from '../../../utils/token'
+import { UserContext } from '../../../contexts/UserContext'
+import { useNavigate } from 'react-router'
 function Login() {
+    
     const { setUser } = useContext(UserContext)
     const [errorData, setErrorData] = useState({})
     const [formData, setFormData] = useState({
         password: "",
         username: ""
     })
+    let navigate = useNavigate()
+
     const handleSubmit = async (e) => {
         try {
             e.preventDefault()
@@ -17,6 +22,7 @@ function Login() {
             const token = response.data
             if (token) setToken(token)
             setUser(getUserFromToken())
+            navigate("/")
         } catch (error) {
             if (error.response.status == 500) {
                 toast("Something went wrong please try again")
@@ -26,9 +32,11 @@ function Login() {
         }
 
     }
+
     const handleChange = async (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
+
     return (
         <>
             <div className='form-box'>
