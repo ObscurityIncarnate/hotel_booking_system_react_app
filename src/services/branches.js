@@ -12,3 +12,7 @@ export const branchesIndex = ()=>{
 export const branchRooms = (branchId)=>{
     return api.get(`/${branchId}/room/`)
 }
+
+export const roomdetails = (branchId, roomId)=>{
+    return api.get(`/${branchId}/room/${roomId}`)
+}

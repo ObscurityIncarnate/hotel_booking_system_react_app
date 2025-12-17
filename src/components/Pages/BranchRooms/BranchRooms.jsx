@@ -9,7 +9,10 @@ function BranchRooms() {
     const { branchId } = useParams();
     const [errorData, setErrorData] = useState({})
     const [isLoading, setIsLoading] = useState(true)
-    const [formData, setFormData] = useState({})
+    const [formData, setFormData] = useState({
+        "max_guests": 1,
+        "type" :""
+    })
     const [rooms, setRooms] = useState([])
     const [filteredRooms, setFilteredRooms] = useState([])
     useEffect(() => {
@@ -30,40 +33,55 @@ function BranchRooms() {
         }
         getBranchRooms()
     }, [])
-    const handleChange = (e)=>{
-        console.log(e.target)
-        setFormData({... formData, [e.target.name]: e.target.value})
-        const output = rooms.filter(room=>{
-            return
-        })
+    useEffect(()=>{
+        let output = [...rooms]
+        if(formData.max_guests && formData.max_guests>1){
+            output = output.filter(room=>room.max_guests>=formData.max_guests)
+        }
+        if(formData.type && formData.type != ""){
+            output = output.filter(room=>room.type === formData.type)
+        }
+
+        setFilteredRooms(output)
+    }, [rooms, formData])
+    const handleChange = (e) => {
+        console.log(e.target.value)
+        setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
+    const handleClear = ()=>{
+        setFormData({
+        "max_guests": 1,
+        "type" :""})
+        setFilteredRooms(rooms)
     }
     return (
         <>
             {/* filter */}
             <div>
-                {/* HELLO */}
-                <label htmlFor="">Dates</label>
+                {/* <label htmlFor="">Dates</label>
                 <input type="date" name="start_date" onChange={handleChange} />
-                <input type="date" name="end_date" onChange={handleChange} />
+                <input type="date" name="end_date" onChange={handleChange} /> */}
                 <label htmlFor="max_guest">Max guests</label>
-                <input type="number" name="max_guest" onChange={handleChange} />
+                <input type="number" name="max_guests" min={1} max={10} step={1} value={formData.max_guests} onChange={handleChange} />
                 <label htmlFor="type">Room Type</label>
-                <select name="type" id="">
-                    <option value="" selected="selected"></option>
-                    <option value="classic">Classic</option>
-                    <option value="deluxe">Deluxe</option>
-                    <option value="executive">Executive</option>
-                    <option value="super_executive">Super Executive</option>
-                    <option value="self_cat_executive">Self Catering Executive</option>
+                <select name="type" id="" value={formData.type} onChange={handleChange}>
+                    <option value=""></option>
+                    <option value="Classic Suite">Classic</option>
+                    <option value="Supreme Suite">Supreme</option>
+                    <option value="Deluxe Suite">Deluxe</option>
+                    <option value="Executive Suite">Executive</option>
+                    <option value="Super Executive Suite">Super Executive</option>
+                    <option value="Self Catering Execuitve Suite">Self Catering Executive</option>
                 </select>
+                <button onClick={handleClear}>Clear</button>
             </div>
-            {isLoading ? <LoadingIcon/> :
+            {isLoading ? <LoadingIcon /> :
                 <div>
                     {
-                        rooms.map(room => {
+                        filteredRooms.map(room => {
                             return (
                                 <>
-                                    <div className="roomCard">
+                                    <div className="roomCard" key={room.id} onClick={()=>{navigate(`${room.id}`)}}>
                                         <img src={room.images.length > 0 ? room.images[0] : placeholder} alt={placeholder} width={250} />
                                         <div>
                                             <p>{room.price_per_night}</p>

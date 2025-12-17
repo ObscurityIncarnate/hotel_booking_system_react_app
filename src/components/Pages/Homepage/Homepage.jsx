@@ -25,7 +25,7 @@ function Homepage() {
                     toast('Something went wrong please try again')
                     setErrorData(error.response.data)
                 }
-                toast(error.response.data)
+                toast(error.response.data?.detail)
                 setErrorData(error.response.data)
             }
         }
@@ -41,7 +41,7 @@ function Homepage() {
         return () => clearInterval(interval)
     }, [branches.length])
     const handleClick = ()=>{
-        navigate(`/branches/${branches[currentBranch].id}`)
+        navigate(`/branches/${branches[currentBranch].id}/rooms`)
     }
     const carouselBranches = () => {
         const branch = branches[currentBranch]
