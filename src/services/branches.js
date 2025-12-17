@@ -8,3 +8,7 @@ const api = axios.create({
 export const branchesIndex = ()=>{
     return api.get('')
 }
+
+export const branchRooms = (branchId)=>{
+    return api.get(`/${branchId}/room/`)
+}

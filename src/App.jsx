@@ -7,7 +7,7 @@ import Register from './components/Pages/Register/Register'
 import Payment from './components/Pages/Payment/Payment'
 import Homepage from './components/Pages/Homepage/Homepage'
 import Footer from './components/PageElements/Footer/Footer'
-import { ToastContainer } from 'react-toastify'
+import BranchRooms from './components/Pages/BranchRooms/BranchRooms'
 function App() {
 
   return (
@@ -19,7 +19,7 @@ function App() {
           <Route path='/auth/register' element={<Register/>}></Route>
           <Route path='/payment' element={<Payment/>}></Route>
           <Route path='' element={<Homepage/>}></Route>
-          <Route></Route>
+          <Route path='/branches/:branchId' element={<BranchRooms/>}></Route>
         </Routes>
         {/* <ToastContainer/> */}
       </main>
