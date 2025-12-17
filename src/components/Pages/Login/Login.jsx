@@ -6,7 +6,7 @@ import { getUserFromToken, setToken, getToken } from '../../../utils/token'
 import { UserContext } from '../../../contexts/UserContext'
 import { useNavigate } from 'react-router'
 function Login() {
-    
+
     const { setUser } = useContext(UserContext)
     const [errorData, setErrorData] = useState({})
     const [formData, setFormData] = useState({
@@ -19,9 +19,11 @@ function Login() {
         try {
             e.preventDefault()
             const response = await signInService(formData)
-            const token = response.data
+            const token = response.data.access
             if (token) setToken(token)
+            
             setUser(getUserFromToken())
+            console.log("here")
             navigate("/")
         } catch (error) {
             if (error.response.status == 500) {

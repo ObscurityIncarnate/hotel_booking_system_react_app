@@ -5,6 +5,8 @@ import Navbar from './components/PageElements/Navbar/Navbar'
 import Login from './components/Pages/Login/Login'
 import Register from './components/Pages/Register/Register'
 import Payment from './components/Pages/Payment/Payment'
+import Homepage from './components/Pages/Homepage/Homepage'
+import Footer from './components/PageElements/Footer/Footer'
 import { ToastContainer } from 'react-toastify'
 function App() {
 
@@ -16,11 +18,13 @@ function App() {
           <Route path='/auth/login' element={<Login/>}></Route>
           <Route path='/auth/register' element={<Register/>}></Route>
           <Route path='/payment' element={<Payment/>}></Route>
-          <Route></Route>
+          <Route path='' element={<Homepage/>}></Route>
           <Route></Route>
         </Routes>
         {/* <ToastContainer/> */}
       </main>
+      <Footer></Footer>
+
     </>
   )
 }
