@@ -33,7 +33,7 @@ function RoomCreate() {
             <div className="form-box">
                 <form className="form" onSubmit={handleSubmit}>
                     <label htmlFor="price_per_night">Price per night</label>
-                    <input type="text" inputmode="decimal"
+                    <input type="text" inputMode="decimal"
                         id="float-input" name="price_per_night"
                         pattern="[0-9]*[.,]?[0-9]*" onChange={handleChange} required />
                     {errorData["price_per_night"] ? <p className='errorMessage'>{errorData["price_per_night"]}</p> : null}
@@ -41,8 +41,8 @@ function RoomCreate() {
                     <textarea name="description" id="" onChange={handleChange} required></textarea>
                     {errorData["description"] ? <p className='errorMessage'>{errorData["description"]}</p> : null}
                     <label htmlFor="max_guests">Max number of guests allowed</label>
-                    <input type="number" name="max_guests" min={1} max={10} step={1} id="" onChange={handleChange}/>
-                                        {errorData["max_guests"] ? <p className='errorMessage'>{errorData["max_guests"]}</p> : null}
+                    <input type="number" name="max_guests" min={1} max={10} step={1} id="" onChange={handleChange} />
+                    {errorData["max_guests"] ? <p className='errorMessage'>{errorData["max_guests"]}</p> : null}
                     <label htmlFor="type">Room type</label>
                     <select name="type" id="" onChange={handleChange}>
                         <option value="Classic Suite">Classic Suite</option>
@@ -52,7 +52,7 @@ function RoomCreate() {
                         <option value="Super Executive Suite">Super Executive Suite</option>
                         <option value="Self Catering Execuitve Suite">Self Catering Execuitve Suite</option>
                     </select>
-                                        {errorData["type"] ? <p className='errorMessage'>{errorData["type"]}</p> : null}
+                    {errorData["type"] ? <p className='errorMessage'>{errorData["type"]}</p> : null}
                     <button type="submit">Submit</button>
                 </form>
             </div>

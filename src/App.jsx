@@ -13,6 +13,7 @@ import RoomDetail from './components/Pages/RoomDetail/RoomDetail'
 import AccountDetails from './components/Pages/AccountDetails/AccountDetails'
 import NotFound from './components/Pages/NotFound/NotFound'
 import RoomCreate from './components/Pages/RoomCreate/RoomCreate'
+import RoomUpdate from './components/Pages/RoomUpdate/RoomUpdate'
 function App() {
   const { user, signOut } = useContext(UserContext)
   return (
@@ -36,7 +37,7 @@ function App() {
             {user &&user.is_staff?
               <>
                 <Route path='/branches/:branchId/room/create' element={<RoomCreate/>}></Route>
-                <Route path='/branches/:branchId/room/:roomId/edit'></Route>              
+                <Route path='/branches/:branchId/room/:roomId/edit' element={<RoomUpdate/>}></Route>              
               </>
             : null}
           <Route path='*' element={<NotFound />}></Route>            

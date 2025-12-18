@@ -20,8 +20,15 @@ export const createBranchRoom = (branchId,  formData)=>{
         }
     })
 }
+export const updateBranchRoom =(branchId, roomId, formData)=>{
+    return api.put(`/${branchId}/room/${roomId}/`, formData, {
+        headers:{
+            Authorization: `Bearer ${getToken()}`
+        }
+    })
+}
 export const roomdetails = (branchId, roomId)=>{
-    return api.get(`/${branchId}/room/${roomId}`)
+    return api.get(`/${branchId}/room/${roomId}/`)
 }
 export const branchDetails = (branchId)=>{
     return api.get(`/${branchId}/`)
