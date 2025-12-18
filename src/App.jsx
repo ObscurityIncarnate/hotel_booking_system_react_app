@@ -12,6 +12,7 @@ import BranchRooms from './components/Pages/BranchRooms/BranchRooms'
 import RoomDetail from './components/Pages/RoomDetail/RoomDetail'
 import AccountDetails from './components/Pages/AccountDetails/AccountDetails'
 import NotFound from './components/Pages/NotFound/NotFound'
+import RoomCreate from './components/Pages/RoomCreate/RoomCreate'
 function App() {
   const { user, signOut } = useContext(UserContext)
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path='/payment' element={<Payment />}></Route>
           <Route path='' element={<Homepage />}></Route>
           <Route path='/branches/:branchId/rooms' element={<BranchRooms />}></Route>
+          
           <Route path='/branches/:branchId/rooms/:roomId' element={<RoomDetail />}></Route>
           {user ?
             <Route path='/user/:userId' element={<AccountDetails />}></Route>
@@ -31,6 +33,12 @@ function App() {
               <Route path='/auth/register' element={<Register />}></Route>
 
             </>}
+            {user &&user.is_staff?
+              <>
+                <Route path='/branches/:branchId/room/create' element={<RoomCreate/>}></Route>
+                <Route path='/branches/:branchId/room/:roomId/edit'></Route>              
+              </>
+            : null}
           <Route path='*' element={<NotFound />}></Route>            
         </Routes>
 
