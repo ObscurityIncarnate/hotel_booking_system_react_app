@@ -16,3 +16,9 @@ export const branchRooms = (branchId)=>{
 export const roomdetails = (branchId, roomId)=>{
     return api.get(`/${branchId}/room/${roomId}`)
 }
+export const branchDetails = (branchId)=>{
+    return api.get(`/${branchId}/`)
+}
+export const roomreservations =(branchId, roomId)=>{
+    return api.get(`/${branchId}/room/${roomId}/reservations/`)
+}
