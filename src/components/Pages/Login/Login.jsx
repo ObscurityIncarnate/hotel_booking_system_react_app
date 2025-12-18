@@ -23,7 +23,6 @@ function Login() {
             if (token) setToken(token)
             
             setUser(getUserFromToken())
-            console.log("here")
             navigate("/")
         } catch (error) {
             if (error.response.status == 500) {
