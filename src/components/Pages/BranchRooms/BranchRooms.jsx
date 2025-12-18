@@ -21,7 +21,6 @@ function BranchRooms() {
                 const { data } = await branchRooms(branchId)
                 setRooms(data)
                 setIsLoading(false)
-                console.log(data)
             } catch (error) {
                 if (error.response.status == 500) {
                     toast('Something went wrong please try again')
@@ -45,7 +44,6 @@ function BranchRooms() {
         setFilteredRooms(output)
     }, [rooms, formData])
     const handleChange = (e) => {
-        console.log(e.target.value)
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
     const handleClear = ()=>{
@@ -80,7 +78,6 @@ function BranchRooms() {
                     {
                         filteredRooms.map(room => {
                             return (
-                                <>
                                     <div className="roomCard" key={room.id} onClick={()=>{navigate(`${room.id}`)}}>
                                         <img src={room.images.length > 0 ? room.images[0] : placeholder} alt={placeholder} width={250} />
                                         <div>
@@ -93,7 +90,6 @@ function BranchRooms() {
 
                                         </div>
                                     </div>
-                                </>
                             )
                         })
                     }
