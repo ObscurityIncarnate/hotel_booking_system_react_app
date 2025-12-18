@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Routes, Route } from 'react-router'
+import { UserContext } from './contexts/UserContext'
 import './App.css'
 import Navbar from './components/PageElements/Navbar/Navbar'
 import Login from './components/Pages/Login/Login'
@@ -9,20 +10,30 @@ import Homepage from './components/Pages/Homepage/Homepage'
 import Footer from './components/PageElements/Footer/Footer'
 import BranchRooms from './components/Pages/BranchRooms/BranchRooms'
 import RoomDetail from './components/Pages/RoomDetail/RoomDetail'
+import AccountDetails from './components/Pages/AccountDetails/AccountDetails'
+import NotFound from './components/Pages/NotFound/NotFound'
 function App() {
-
+  const { user, signOut } = useContext(UserContext)
   return (
     <>
       <Navbar></Navbar>
       <main>
         <Routes>
-          <Route path='/auth/login' element={<Login/>}></Route>
-          <Route path='/auth/register' element={<Register/>}></Route>
-          <Route path='/payment' element={<Payment/>}></Route>
-          <Route path='' element={<Homepage/>}></Route>
-          <Route path='/branches/:branchId/rooms' element={<BranchRooms/>}></Route>
-          <Route path='/branches/:branchId/rooms/:roomId' element={<RoomDetail/>}></Route>
+
+          <Route path='/payment' element={<Payment />}></Route>
+          <Route path='' element={<Homepage />}></Route>
+          <Route path='/branches/:branchId/rooms' element={<BranchRooms />}></Route>
+          <Route path='/branches/:branchId/rooms/:roomId' element={<RoomDetail />}></Route>
+          {user ?
+            <Route path='/user/:userId' element={<AccountDetails />}></Route>
+            : <>
+              <Route path='/auth/login' element={<Login />}></Route>
+              <Route path='/auth/register' element={<Register />}></Route>
+
+            </>}
+          <Route path='*' element={<NotFound />}></Route>            
         </Routes>
+
         {/* <ToastContainer/> */}
       </main>
       <Footer></Footer>

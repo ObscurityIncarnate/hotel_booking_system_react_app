@@ -6,10 +6,6 @@ import { UserContext } from '../../../contexts/UserContext'
 function Navbar() {
     let navigate = useNavigate()
     const { user, signOut } = useContext(UserContext)
-    const [menu, setMenu] = useState(false)
-    const showMenu = () => {
-        setMenu(prev => !prev)
-    }
     return (
         <header>
             <div id='lhs_navbar'>
@@ -25,13 +21,10 @@ function Navbar() {
                 <div>
                     {user ? (
                         <>
-                            <div onClick={showMenu}>
+                            <div onClick={()=>{navigate(`/user/${user.id}`)}}>
                                 {/* <a href=""></a> */}
                                 <i className='fa fa-user-circle' aria-hidden="true" ></i>
                             </div>
-                            {menu ? <div>
-                                Sign out
-                            </div> : null}
 
                         </>
                     ) : (
@@ -39,7 +32,7 @@ function Navbar() {
                             <Link to='/auth/register'>
                                 Sign Up
                             </Link>
-                            <Link href='/auth/login'>
+                            <Link to='/auth/login'>
                                 Sign In
                             </Link>
                         </div>

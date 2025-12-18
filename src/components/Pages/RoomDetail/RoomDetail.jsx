@@ -20,13 +20,7 @@ function RoomDetail() {
         price_per_night: "",
         type: ""
     })
-    const [range, setRange] = useState(
-        {
-            startDate: new Date(),
-            endDate: new Date(),
-            key: "selection"
-        }
-    );
+    const [range, setRange] = useState();
     const [validReservation, setValidReservation] = useState(false)
     const [branch, setBranch] = useState({})
     const [reservations, setReservation] = useState({})
@@ -39,7 +33,7 @@ function RoomDetail() {
                 const branch = await branchDetails(branchId)
                 setBranch(branch.data)
                 const reservations = await roomreservations(branchId, roomId)
-                setReservation(reservations)
+                setReservation(reservations.data)
                 setIsLoading(false)
             } catch (error) {
                 if (error.response.status == 500) {
@@ -53,13 +47,30 @@ function RoomDetail() {
         }
         getRoomDetails()
     }, [])
+    useEffect(()=>{
+        const checkReservationDate =()=>{
+            console.log(reservations)
+            if(range &&range.from&& range.to){
+
+                const overlap = reservations.some(reservation => {
+                   return range.from< new Date(reservation.end_date)  && range.to> new Date(reservation.start_date)
+                })
+                overlap?setValidReservation(false):setValidReservation(true)
+            }else{
+                setValidReservation(false)
+            }
+        }
+        checkReservationDate()
+    }, [range])
     const getTotal = ()=>{
         
        const msToDay = 86400000
-       const days = (range.to - range.from)/ msToDay
-       console.log(days)
+       let days = (range.to - range.from)/ msToDay
+       if( days <1) days =1 
        return (room.price_per_night *1.2 *days).toFixed(2)
     }
+
+    // checkReservationDate()
     return (
         !isLoading ?
             <>
@@ -76,10 +87,10 @@ function RoomDetail() {
                             : null}
                     </div>
                     <div>
-                        <label htmlFor="start_date">Dates</label>
-                        <DayPicker mode="range" numberOfMonths={1} selected={range} onSelect={setRange} />
+                        <label htmlFor="stay range">Dates</label>
+                        <DayPicker mode="range" aria-labelledby="stay range"  numberOfMonths={1} selected={range} onSelect={setRange}  required/>
                         <label htmlFor="guest">Guest(s)</label>
-                        <input type="number"  min={1} max={room.max_guests} step={1} name="guest" id="" />
+                        <input type="number"  min={1} max={room.max_guests} defaultValue={1}  step={1} name="guest" id="" required />
                         <h3>Price</h3>
                         <div>
                             <p>Base rate</p>
@@ -94,6 +105,7 @@ function RoomDetail() {
                             {range &&range.from&& range.to?<span>£{getTotal() }</span>: <span>-</span>}
                         </div>
                         <button disabled={!validReservation}>Reserve</button>
+                        {validReservation?null:<p className="errorMessage">This room is already reserved within your selected dates</p>}
                     </div>
                     <div className="description">
                         <h3>Description</h3>
