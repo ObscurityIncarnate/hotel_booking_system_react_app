@@ -6,7 +6,7 @@ import placeholder from "../../../assets/Placeholder_Image.png"
 import MapContainer from "../../PageElements/MapContainer/MapContainer"
 import LoadingIcon from "../../PageElements/LoadingIcon/LoadingIcon"
 import "react-day-picker/style.css";
-
+import "./RoomDetail.css"
 import { DayPicker } from "react-day-picker"
 import { UserContext } from "../../../contexts/UserContext"
 
@@ -78,10 +78,11 @@ function RoomDetail() {
     return (
         !isLoading ?
             <div className="body">
-                <div>
-                    {user && user.is_staff?<button onClick={() => {
-                        navigate(`/branches/${branchId}/room/${roomId}/edit`)
-                    }}>Edit Room</button>: null
+                <div className="room-container">
+                    {user && user.is_staff ?
+                        <button className="edit-room-btn" onClick={() => {
+                            navigate(`/branches/${branchId}/room/${roomId}/edit`)
+                        }}>Edit Room</button> : null
                     }
                     <div className="gallery">
                         <div>
@@ -94,34 +95,89 @@ function RoomDetail() {
                                 </div>
                                 : null}
                     </div>
-                    <div>
-                        <label htmlFor="stay range">Dates</label>
-                        <DayPicker mode="range" aria-labelledby="stay range" numberOfMonths={1} selected={range} onSelect={setRange} required />
-                        <label htmlFor="guest">Guest(s)</label>
-                        <input type="number" min={1} max={room.max_guests} defaultValue={1} step={1} name="guest" id="" required />
-                        <h3>Price</h3>
-                        <div>
-                            <p>Base rate</p>
-                            <p>£{room.price_per_night}</p>
-                        </div>
-                        <div>
-                            <span>VAT / GST</span>
-                            <span>£{(0.2 * room.price_per_night).toFixed(2)}</span>
-                        </div>
-                        <div>
-                            <span>Due Today:</span>
-                            {range && range.from && range.to ? <span>£{getTotal()}</span> : <span>-</span>}
-                        </div>
-                        <button disabled={!validReservation}>Reserve</button>
-                        {validReservation ? null : <p className="errorMessage">This room is already reserved within your selected dates</p>}
-                    </div>
-                    <div className="description">
-                        <h3>Description</h3>
-                        <p>{room.description}</p>
-                    </div>
-                    <MapContainer longitude={parseFloat(branch.longitude)} latitude={parseFloat(branch.latitude)}>
+                    <div className="room-main">
+                        <div className="room-left">
+                            <div className="description">
+                                <h3>Description</h3>
+                                <p>{room.description}</p>
+                            </div>
+                            <MapContainer longitude={parseFloat(branch.longitude)} latitude={parseFloat(branch.latitude)}>
 
-                    </MapContainer>
+                            </MapContainer>
+                        </div>
+                        <div className="room-right">
+                            {/* <div>
+                                <label htmlFor="stay range">Dates</label>
+                                <DayPicker mode="range" aria-labelledby="stay range" numberOfMonths={1} selected={range} onSelect={setRange} required />
+                                <label htmlFor="guest">Guest(s)</label>
+                                <input type="number" min={1} max={room.max_guests} defaultValue={1} step={1} name="guest" id="" required />
+                                <h3>Price</h3>
+                                <div>
+                                    <span>Base rate: </span>
+                                    <span>£{room.price_per_night}</span>
+                                </div>
+                                <div>
+                                    <span>VAT / GST: </span>
+                                    <span>£{(0.2 * room.price_per_night).toFixed(2)}</span>
+                                </div>
+                                <div>
+                                    <span>Due Today: </span>
+                                    {range && range.from && range.to ? <span>£{getTotal()}</span> : <span>-</span>}
+                                </div>
+                                <button disabled={!validReservation}>Reserve</button>
+                                {validReservation ? null : <p className="errorMessage">This room is already reserved within your selected dates</p>}
+                            </div> */}
+                            <div className="booking-box">
+                                <label className="booking-label">Dates</label>
+                                <DayPicker
+                                    mode="range"
+                                    numberOfMonths={1}
+                                    selected={range}
+                                    onSelect={setRange}
+                                />
+
+                                <label className="booking-label">Guest(s)</label>
+                                <input
+                                    className="booking-input"
+                                    type="number"
+                                    min={1}
+                                    max={room.max_guests}
+                                    defaultValue={1}
+                                />
+
+                                <h3 className="price-title">Price</h3>
+
+                                <div className="price-row">
+                                    <span>Base rate</span>
+                                    <span>£{room.price_per_night}</span>
+                                </div>
+
+                                <div className="price-row">
+                                    <span>VAT / GST</span>
+                                    <span>£{(0.2 * room.price_per_night).toFixed(2)}</span>
+                                </div>
+
+                                <div className="price-row total">
+                                    <span>Due today</span>
+                                    {range?.from && range?.to ? (
+                                        <span>£{getTotal()}</span>
+                                    ) : (
+                                        <span>-</span>
+                                    )}
+                                </div>
+
+                                <button onClick={()=>{navigate("/payment")}} disabled={!validReservation}>Reserve</button>
+
+                                {!validReservation && (
+                                    <p className="errorMessage">
+                                        This room is already reserved within your selected dates
+                                    </p>
+                                )}
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
                 <ToastContainer />
             </div> : <LoadingIcon></LoadingIcon>
