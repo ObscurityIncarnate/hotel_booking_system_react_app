@@ -21,3 +21,13 @@ export const cancelUserReservations = (userId, reservationId) => {
 
     })
 }
+
+
+export const createUserReservations = (userId, roomId, formData) =>{
+    return api.post(`/${userId}/rooms/${roomId}/reservations/`, formData, {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        }
+
+    })
+}

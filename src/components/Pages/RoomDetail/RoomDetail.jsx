@@ -9,10 +9,10 @@ import "react-day-picker/style.css";
 import "./RoomDetail.css"
 import { DayPicker } from "react-day-picker"
 import { UserContext } from "../../../contexts/UserContext"
+import { createUserReservations } from "../../../services/account"
 
 function RoomDetail() {
     const { user } = useContext(UserContext)
-    console.log(user)
     const navigate = useNavigate()
     const [errorData, setErrorData] = useState({})
     const [isLoading, setIsLoading] = useState(true)
@@ -28,11 +28,11 @@ function RoomDetail() {
     const [branch, setBranch] = useState({})
     const [reservations, setReservation] = useState({})
     const { branchId, roomId } = useParams()
+    const [formData, setFormData] = useState({})
     useEffect(() => {
         const getRoomDetails = async () => {
             try {
                 const { data } = await roomdetails(branchId, roomId)
-                console.log(data)
                 setRoom(data)
                 const branch = await branchDetails(branchId)
                 setBranch(branch.data)
@@ -40,7 +40,7 @@ function RoomDetail() {
                 setReservation(reservations.data)
                 setIsLoading(false)
             } catch (error) {
-                if (error.response.status == 500) {
+                if (error.response?.status == 500) {
                     toast("Something went wrong. Please try again later")
                     setErrorData({ message: "Something went wrong. Please try again later" })
                 }
@@ -60,8 +60,14 @@ function RoomDetail() {
                     return range.from < new Date(reservation.end_date) && range.to > new Date(reservation.start_date)
                 })
                 overlap ? setValidReservation(false) : setValidReservation(true)
+                // console.log(range.from.toLocaleDateString("en-CA"))
+                setFormData({
+                    start_date: range.from.toLocaleDateString("en-CA"),
+                    end_date: range.to.toLocaleDateString("en-CA")
+                })
             } else {
                 setValidReservation(false)
+                setFormData({})
             }
         }
         checkReservationDate()
@@ -73,7 +79,20 @@ function RoomDetail() {
         if (days < 1) days = 1
         return (room.price_per_night * 1.2 * days).toFixed(2)
     }
-
+    const handleSubmit = async ()=>{
+        try {
+            const response = await createUserReservations(user.id, roomId, formData )
+            console.log(response)
+            navigate("/payment")
+        } catch (error) {
+            if(error.response.status == 500){
+                toast("Something went wrong. Please try again later")
+                setErrorData({ message: "Something went wrong. Please try again later" })
+            }
+            toast(error.response.data?.detail)
+            setErrorData(error.response.data)
+        }
+    }
     // checkReservationDate()
     return (
         !isLoading ?
@@ -166,7 +185,7 @@ function RoomDetail() {
                                     )}
                                 </div>
 
-                                <button onClick={()=>{navigate("/payment")}} disabled={!validReservation}>Reserve</button>
+                                <button onClick={handleSubmit} disabled={!validReservation}>Reserve</button>
 
                                 {!validReservation && (
                                     <p className="errorMessage">
