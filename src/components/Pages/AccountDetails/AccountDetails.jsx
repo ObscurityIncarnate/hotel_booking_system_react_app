@@ -86,7 +86,7 @@ function AccountDetails() {
 
     }
     return (
-        <>
+        <div className="body">
             {isLoading ? <LoadingIcon /> :
                 <div>
                     <div>
@@ -115,7 +115,7 @@ function AccountDetails() {
                     <ToastContainer />
                 </div>}
 
-        </>
+        </div>
     )
 }
 

@@ -3,7 +3,7 @@ function Payment(){
         e.preventDefault()
     }
     return(
-        <>
+        <div className="body">
             <div className="form-box">
                 <form className="form" onSubmit={handleSubmit}>
                     <label htmlFor="cardholder_name">Cardholder's Name</label>
@@ -25,7 +25,7 @@ function Payment(){
                     <button type="submit">Pay now</button>
                 </form>
             </div>
-        </>
+        </div>
     )
 }
 

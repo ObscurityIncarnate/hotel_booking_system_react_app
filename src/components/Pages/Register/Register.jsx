@@ -31,23 +31,25 @@ function Register() {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
     return (
-        <>
+        <div className='auth-page'>
             <div className='form-box'>
+
                 <form onSubmit={handleSubmit} className='form'>
+                    <h3>Register</h3>
                     <label htmlFor="username">Username</label>
-                    <input type="text" name='username' onChange={handleChange} />
+                    <input type="text" name='username' onChange={handleChange} required/>
                     {errorData["username"] ? <p className='errorMessage'>{errorData["username"]}</p> : null}
 
                     <label htmlFor="email">Email</label>
-                    <input type="email" name="email" onChange={handleChange} />
+                    <input type="email" name="email" onChange={handleChange} required/>
                     {errorData["email"] ? <p className='errorMessage'>{errorData["email"]}</p> : null}
 
                     <label htmlFor="password">Password</label>
-                    <input type="password" name="password" onChange={handleChange} />
+                    <input type="password" name="password" onChange={handleChange} required />
                     {errorData["password"] ? <p className='errorMessage'>{errorData["password"]}</p> : null}
 
                     <label htmlFor="confirm_password">Confirm Password</label>
-                    <input type="password" name="confirm_password" onChange={handleChange} />
+                    <input type="password" name="confirm_password" onChange={handleChange}  required/>
                     {errorData["confirm_password"] ? <p className='errorMessage'>{errorData["confirm_password"]}</p> : null}
 
                     <button type="submit">Register</button>
@@ -58,9 +60,15 @@ function Register() {
                         </> : null
                     }
                 </form>
+                <div className='design-box'>
+                    <h1>
+                        Welcome
+                    </h1>
+                    <p>Register an account with us, to get access to all the benefits</p>
+                </div>
             </div>
             <ToastContainer />
-        </>
+        </div>
     )
 }
 

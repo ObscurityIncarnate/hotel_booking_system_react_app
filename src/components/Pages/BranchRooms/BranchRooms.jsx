@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router"
 import { branchRooms } from "../../../services/branches";
 import { toast, ToastContainer } from "react-toastify";
 import placeholder from "../../../assets/Placeholder_Image.png"
 import LoadingIcon from "../../PageElements/LoadingIcon/LoadingIcon";
 import './BranchRooms.css'
+import { UserContext } from "../../../contexts/UserContext";
 function BranchRooms() {
     const navigate = useNavigate()
     const { branchId } = useParams();
+    const {user} = useContext(UserContext)
     const [errorData, setErrorData] = useState({})
     const [isLoading, setIsLoading] = useState(true)
     const [formData, setFormData] = useState({
@@ -55,7 +57,7 @@ function BranchRooms() {
         setFilteredRooms(rooms)
     }
     return (
-        <>
+        <div className="body">
             {/* filter */}
             {/* <div id="filter"> */}
             {/* <label htmlFor="">Dates</label>
@@ -75,6 +77,9 @@ function BranchRooms() {
                 </select>
                 <button onClick={handleClear}>Clear</button>
             </div> */}
+            {user && user.is_staff ? <button onClick={() => {
+                navigate(`/branches/${branchId}/room/create`)
+            }}>Create Room</button> : null}
             <div id="filter">
                 <div className="filter-item">
                     <label htmlFor="max_guests">Max guests</label>
@@ -137,7 +142,7 @@ function BranchRooms() {
             }
 
             <ToastContainer />
-        </>
+        </div>
     )
 }
 

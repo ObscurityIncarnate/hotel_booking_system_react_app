@@ -1,27 +1,29 @@
-
-
-.body{
+.body {
     min-height: 90vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    color: #3B3B3B;
+
 }
 
-.branchGallery{
-    height: 600px ;
+.branchGallery {
+    height: 600px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    width:1000px;
+    width: 1000px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 }
+
 .overlay-content {
-  text-align: center;
-  color: white;
-  /* background: rgba(0, 0, 0, 0.4); optional: makes text readable */
-  padding: 20px 40px;
-  border-radius: 10px;
+    text-align: center;
+    color: white;
+    /* background: rgba(0, 0, 0, 0.4); optional: makes text readable */
+    padding: 20px 40px;
+    border-radius: 10px;
 }

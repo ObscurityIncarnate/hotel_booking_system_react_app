@@ -20,7 +20,7 @@ function Navbar() {
                     {user ? (
                         <>
                             <div onClick={() => { navigate(`/user/${user.id}`) }}>
-                                <i className='fa fa-user-circle' aria-hidden="true" ></i>
+                                <i className='fa fa-user-circle fa-2x' aria-hidden="true" ></i>
                             </div>
 
                         </>

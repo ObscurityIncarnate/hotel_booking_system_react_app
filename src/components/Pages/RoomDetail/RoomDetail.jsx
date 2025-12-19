@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router"
 import { branchDetails, branchesIndex, roomdetails, roomreservations } from "../../../services/branches"
 import { toast, ToastContainer } from "react-toastify"
@@ -8,8 +8,11 @@ import LoadingIcon from "../../PageElements/LoadingIcon/LoadingIcon"
 import "react-day-picker/style.css";
 
 import { DayPicker } from "react-day-picker"
+import { UserContext } from "../../../contexts/UserContext"
 
 function RoomDetail() {
+    const { user } = useContext(UserContext)
+    console.log(user)
     const navigate = useNavigate()
     const [errorData, setErrorData] = useState({})
     const [isLoading, setIsLoading] = useState(true)
@@ -74,15 +77,19 @@ function RoomDetail() {
     // checkReservationDate()
     return (
         !isLoading ?
-            <>
+            <div className="body">
                 <div>
+                    {user && user.is_staff?<button onClick={() => {
+                        navigate(`/branches/${branchId}/room/${roomId}/edit`)
+                    }}>Edit Room</button>: null
+                    }
                     <div className="gallery">
                         <div>
                             <img src={room.images.length > 0 ? room.images[0] : placeholder} onError={(e) => e.currentTarget.src = placeholder} alt="room image" width="40%" height="30%" />
                         </div>
                         {
                             room.images.length > 1 ?
-                                <div style={{ backgroundImage: room.images[1]}}>
+                                <div style={{ backgroundImage: room.images[1] }}>
                                     <p>{room.images.length - 1} more images</p>
                                 </div>
                                 : null}
@@ -117,7 +124,7 @@ function RoomDetail() {
                     </MapContainer>
                 </div>
                 <ToastContainer />
-            </> : <LoadingIcon></LoadingIcon>
+            </div> : <LoadingIcon></LoadingIcon>
     )
 }
 

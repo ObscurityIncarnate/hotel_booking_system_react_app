@@ -5,7 +5,7 @@ import { toast, ToastContainer } from "react-toastify"
 import LoadingIcon from "../../PageElements/LoadingIcon/LoadingIcon"
 import ImageUploadField from "../../PageElements/ImageUploadField/ImageUploadField"
 import { uploadImage } from "../../../services/cloudinary"
-
+import './RoomUpdate.css'
 function RoomUpdate
     () {
     const navigate = useNavigate()
@@ -85,10 +85,10 @@ function RoomUpdate
     }
     return (
 
-        <>
+        <div className="auth-page">
             {isLoading ? <LoadingIcon /> :
                 <div className="form-box">
-                    <form className="form" onSubmit={handleSubmit}>
+                    <form className="form room-form" onSubmit={handleSubmit}>
                         <label htmlFor="price_per_night">Price per night</label>
                         <input type="text" inputMode="decimal"
                             id="float-input" name="price_per_night"
@@ -114,7 +114,7 @@ function RoomUpdate
                             Please upload and image
                         </label>
                         <input type='file' accept="image/*" onChange={handleFileUpload} multiple />
-                        <div >
+                        <div className="image-preview-grid" >
                             {formData.images ?
                                 formData.images.map((image, index) => {
                                     return (
@@ -132,7 +132,7 @@ function RoomUpdate
                 </div>
             }
             <ToastContainer />
-        </>
+        </div>
     )
 }
 export default RoomUpdate

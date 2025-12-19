@@ -44,10 +44,10 @@ function Login() {
                 <form onSubmit={handleSubmit} className='form'>
                     <h3>Login</h3>
                     <label htmlFor="username">Username</label>
-                    <input type="text" name='username' onChange={handleChange} />
+                    <input type="text" name='username' onChange={handleChange} required/>
                     {errorData["username"] ? <p className='errorMessage'>{errorData["username"]}</p> : null}
                     <label htmlFor="password">Password</label>
-                    <input type="password" name="password" onChange={handleChange} />
+                    <input type="password" name="password" onChange={handleChange} required/>
                     {errorData["password"] ? <p className='errorMessage'>{errorData["password"]}</p> : null}
                     <button type="submit">Login</button>
 

@@ -29,7 +29,7 @@ function RoomCreate() {
         }
     }
     return (
-        <>
+        <div className="body">
             <div className="form-box">
                 <form className="form" onSubmit={handleSubmit}>
                     <label htmlFor="price_per_night">Price per night</label>
@@ -57,7 +57,7 @@ function RoomCreate() {
                 </form>
             </div>
             <ToastContainer />
-        </>
+        </div>
     )
 }
 export default RoomCreate
