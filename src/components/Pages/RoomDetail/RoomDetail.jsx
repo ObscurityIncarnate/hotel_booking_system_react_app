@@ -72,6 +72,7 @@ function RoomDetail() {
         }
         checkReservationDate()
     }, [range])
+    
     const getTotal = () => {
 
         const msToDay = 86400000
@@ -94,6 +95,7 @@ function RoomDetail() {
         }
     }
     // checkReservationDate()
+    console.log(branch)
     return (
         !isLoading ?
             <div className="body">

@@ -6,12 +6,11 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 function MapContainer({ longitude, latitude }) {
     const mapRef = useRef()
     const mapContainerRef = useRef()
-
     const INITIAL_CENTER = [
-        longitude,
-        latitude
+        latitude,longitude
+        
     ]
-    const INITIAL_ZOOM = 18.43
+    const INITIAL_ZOOM = 18
     const [center, setCenter] = useState(INITIAL_CENTER)
     const [zoom, setZoom] = useState(INITIAL_ZOOM)
     useEffect(() => {
@@ -34,7 +33,7 @@ function MapContainer({ longitude, latitude }) {
         return () => {
             mapRef.current.remove()
         }
-    }, [])
+    }, [longitude, latitude])
     const handleButtonClick = () => {
         mapRef.current.flyTo({
             center: INITIAL_CENTER,
