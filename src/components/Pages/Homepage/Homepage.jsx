@@ -5,6 +5,7 @@ import LoadingIcon from "../../PageElements/LoadingIcon/LoadingIcon"
 import { toast, ToastContainer } from "react-toastify"
 import placeholder from "../../../assets/Placeholder_Image.png"
 import { useNavigate } from "react-router"
+import './Homepage.css'
 function Homepage() {
     let navigate = useNavigate()
     const { user } = useContext(UserContext)
@@ -18,7 +19,6 @@ function Homepage() {
                 const { data } = await branchesIndex()
                 setIsLoading(false)
                 setBranches(data)
-                console.log(data)
             } catch (error) {
                 console.log(error)
                 if (error.response.status == 500) {
@@ -32,7 +32,7 @@ function Homepage() {
         getBranches()
     }, [])
     useEffect(() => {
-        if (!branches.length>0) return
+        if (!branches.length > 0) return
 
         const interval = setInterval(() => {
             setCurrentBranch(prev => (prev + 1) % branches.length)
@@ -40,31 +40,33 @@ function Homepage() {
 
         return () => clearInterval(interval)
     }, [branches.length])
-    const handleClick = ()=>{
+    const handleClick = () => {
         navigate(`/branches/${branches[currentBranch].id}/rooms`)
     }
     const carouselBranches = () => {
         const branch = branches[currentBranch]
-
+        const bgImage = branch.images[0] || placeholder
         return (
-            <div onClick={handleClick}>
-                <p>{branch.name}</p>
-                <button onClick={handleClick}>Explore {branch.name}</button>
-                <img src={branch.images[0] ? branch.images[0] : placeholder} alt="location image" />
+            <div className="branchGallery overlay-content"
+            style={{backgroundImage: `url(${bgImage})`,}}
+            onClick={handleClick}>
+                <h1>{branch.name}</h1>
+                <button onClick={handleClick}>Explore</button>
             </div>
         )
 
     }
+
     return (
         <>
             {
                 isLoading ?
                     <LoadingIcon></LoadingIcon> :
-                    <div>
+                    <div className="body">
                         {branches && branches.length > 0 ?
-                            <div>
-                                {carouselBranches()}
-                            </div> :
+                    
+                            carouselBranches()
+                             :
                             <p>No Branches found</p>
 
                         }

@@ -39,9 +39,10 @@ function Login() {
     }
 
     return (
-        <>
+        <div className='auth-page'>
             <div className='form-box'>
                 <form onSubmit={handleSubmit} className='form'>
+                    <h3>Login</h3>
                     <label htmlFor="username">Username</label>
                     <input type="text" name='username' onChange={handleChange} />
                     {errorData["username"] ? <p className='errorMessage'>{errorData["username"]}</p> : null}
@@ -51,9 +52,13 @@ function Login() {
                     <button type="submit">Login</button>
 
                 </form>
+                <div className='design-box'>
+                    <h1>Welcome!</h1>
+                    <p>Log in to view your bookings</p>
+                </div>
             </div>
             <ToastContainer />
-        </>
+        </div>
     )
 }
 

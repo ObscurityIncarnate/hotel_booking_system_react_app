@@ -39,7 +39,7 @@ function AccountDetails() {
     }, [])
     const handleSignOut = () => {
         signOut()
-        navigate("")
+        navigate("/")
     }
     const deleteReservation  = async(id)=>{
         try {

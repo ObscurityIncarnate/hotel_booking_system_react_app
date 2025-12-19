@@ -1,0 +1,80 @@
+
+.roomCard {
+    border: 1px solid white;
+    border-radius: 15px;
+    width: 250px;
+    overflow: hidden;
+}
+
+.rooms {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    gap: 10px
+}
+
+
+.roomdetails {
+    padding: 10px;
+}
+
+
+#filter {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    padding: 16px 20px;
+    margin: 20px auto;
+    max-width: 900px;
+
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    backdrop-filter: blur(6px);
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.filter-item label {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.filter-item input,
+.filter-item select {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 0.95rem;
+    color: black;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.filter-item input:focus,
+.filter-item select:focus {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4);
+}
+
+/* Clear button */
+.clear-btn {
+    padding: 9px 16px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+
+    background: #ffffff;
+    color: #333;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.clear-btn:hover {
+    background: #eaeaea;
+    transform: translateY(-1px);
+}

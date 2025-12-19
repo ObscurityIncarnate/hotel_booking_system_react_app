@@ -29,6 +29,7 @@ function RoomDetail() {
         const getRoomDetails = async () => {
             try {
                 const { data } = await roomdetails(branchId, roomId)
+                console.log(data)
                 setRoom(data)
                 const branch = await branchDetails(branchId)
                 setBranch(branch.data)
@@ -47,27 +48,27 @@ function RoomDetail() {
         }
         getRoomDetails()
     }, [])
-    useEffect(()=>{
-        const checkReservationDate =()=>{
+    useEffect(() => {
+        const checkReservationDate = () => {
             console.log(reservations)
-            if(range &&range.from&& range.to){
+            if (range && range.from && range.to) {
 
                 const overlap = reservations.some(reservation => {
-                   return range.from< new Date(reservation.end_date)  && range.to> new Date(reservation.start_date)
+                    return range.from < new Date(reservation.end_date) && range.to > new Date(reservation.start_date)
                 })
-                overlap?setValidReservation(false):setValidReservation(true)
-            }else{
+                overlap ? setValidReservation(false) : setValidReservation(true)
+            } else {
                 setValidReservation(false)
             }
         }
         checkReservationDate()
     }, [range])
-    const getTotal = ()=>{
-        
-       const msToDay = 86400000
-       let days = (range.to - range.from)/ msToDay
-       if( days <1) days =1 
-       return (room.price_per_night *1.2 *days).toFixed(2)
+    const getTotal = () => {
+
+        const msToDay = 86400000
+        let days = (range.to - range.from) / msToDay
+        if (days < 1) days = 1
+        return (room.price_per_night * 1.2 * days).toFixed(2)
     }
 
     // checkReservationDate()
@@ -79,18 +80,18 @@ function RoomDetail() {
                         <div>
                             <img src={room.images.length > 0 ? room.images[0] : placeholder} onError={(e) => e.currentTarget.src = placeholder} alt="room image" width="40%" height="30%" />
                         </div>
-                        {room.images.length > 1 ?
-                            <div>
-                                <img src={room.images[1]} alt="see more images" onError={placeholder} />
-                                <p>{room.images.length - 1} more images</p>
-                            </div>
-                            : null}
+                        {
+                            room.images.length > 1 ?
+                                <div style={{ backgroundImage: room.images[1]}}>
+                                    <p>{room.images.length - 1} more images</p>
+                                </div>
+                                : null}
                     </div>
                     <div>
                         <label htmlFor="stay range">Dates</label>
-                        <DayPicker mode="range" aria-labelledby="stay range"  numberOfMonths={1} selected={range} onSelect={setRange}  required/>
+                        <DayPicker mode="range" aria-labelledby="stay range" numberOfMonths={1} selected={range} onSelect={setRange} required />
                         <label htmlFor="guest">Guest(s)</label>
-                        <input type="number"  min={1} max={room.max_guests} defaultValue={1}  step={1} name="guest" id="" required />
+                        <input type="number" min={1} max={room.max_guests} defaultValue={1} step={1} name="guest" id="" required />
                         <h3>Price</h3>
                         <div>
                             <p>Base rate</p>
@@ -102,10 +103,10 @@ function RoomDetail() {
                         </div>
                         <div>
                             <span>Due Today:</span>
-                            {range &&range.from&& range.to?<span>£{getTotal() }</span>: <span>-</span>}
+                            {range && range.from && range.to ? <span>£{getTotal()}</span> : <span>-</span>}
                         </div>
                         <button disabled={!validReservation}>Reserve</button>
-                        {validReservation?null:<p className="errorMessage">This room is already reserved within your selected dates</p>}
+                        {validReservation ? null : <p className="errorMessage">This room is already reserved within your selected dates</p>}
                     </div>
                     <div className="description">
                         <h3>Description</h3>

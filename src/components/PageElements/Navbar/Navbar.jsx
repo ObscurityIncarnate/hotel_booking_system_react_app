@@ -3,17 +3,15 @@ import { Link } from 'react-router'
 import { useNavigate } from 'react-router'
 import { useContext, useState } from 'react'
 import { UserContext } from '../../../contexts/UserContext'
+import logo from "../../../assets/7.jpg"
 function Navbar() {
     let navigate = useNavigate()
     const { user, signOut } = useContext(UserContext)
     return (
         <header>
             <div id='lhs_navbar'>
-                <div className="menu-button">
-                    <i className="fa fa-bars" aria-hidden="true"></i>
-                </div>
-                <div className='logo'>
-                    <img src='/hotel_logo.jpg' alt='logo image' />
+                <div className='logo' onClick={()=>{navigate("")}}>
+                    <img src={logo} alt='logo image' />
                 </div>
             </div>
             <div id='rhs_navbar'>
@@ -21,8 +19,7 @@ function Navbar() {
                 <div>
                     {user ? (
                         <>
-                            <div onClick={()=>{navigate(`/user/${user.id}`)}}>
-                                {/* <a href=""></a> */}
+                            <div onClick={() => { navigate(`/user/${user.id}`) }}>
                                 <i className='fa fa-user-circle' aria-hidden="true" ></i>
                             </div>
 
