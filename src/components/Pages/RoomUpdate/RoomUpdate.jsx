@@ -113,14 +113,13 @@ function RoomUpdate
                         <label htmlFor="">
                             Please upload and image
                         </label>
-                        <input type='file' accept="image/*" onChange={handleFileUpload} multiple />
+                        <input type='file' accept="image/*" onChange={handleFileUpload} multiple/>
                         <div className="image-preview-grid" >
                             {formData.images ?
                                 formData.images.map((image, index) => {
                                     return (
                                         <div key={index}>
-                                            <img src={image} alt={`uploaded image ${index}`} width={50} height={50} />
-                                            <button onClick={() => { removeImage(index) }}>X</button>
+                                            <img src={image} alt={`uploaded image ${index}`} onClick={() => { removeImage(index) }} width={50} height={50} />
                                         </div>
                                     )
                                 })
