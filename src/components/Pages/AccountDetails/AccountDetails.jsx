@@ -86,36 +86,43 @@ function AccountDetails() {
 
     }
     return (
-        <div className="body">
-            {isLoading ? <LoadingIcon /> :
-                <div>
-                    <div>
-                        <h3>User Details</h3>
-                        <div>
-                            <span>Username:</span>
-                            <span>{userDetails.username}</span>
-                        </div>
-                        <div>
-                            <span>Email:</span>
-                            <span>{userDetails.email}</span>
-                        </div>
-                    </div>
-                    <div>
-                        <h3>Reservations</h3>
-                        <div>
-                            {reservations.map(reservation => {
-                                return (
-                                    displayReservation(reservation)
-                                )
-                            })}
-                        </div>
-                        <button onClick={handleSignOut}>Sign Out</button>
-                        {/* <button> Delete Account</button> */}
-                    </div>
-                    <ToastContainer />
-                </div>}
+        <div className="account-page">
+    {isLoading ? <LoadingIcon /> :
+        <div className="account-container">
 
+            <div className="account-card">
+                <h3>User Details</h3>
+
+                <div className="detail-row">
+                    <span>Username</span>
+                    <span>{userDetails.username}</span>
+                </div>
+
+                <div className="detail-row">
+                    <span>Email</span>
+                    <span>{userDetails.email}</span>
+                </div>
+            </div>
+
+            <div className="account-card">
+                <h3>Reservations</h3>
+
+                <div className="reservation-list">
+                    {reservations.map(reservation =>
+                        displayReservation(reservation)
+                    )}
+                </div>
+
+                <button className="signout-btn" onClick={handleSignOut}>
+                    Sign Out
+                </button>
+            </div>
+
+            <ToastContainer />
         </div>
+    }
+</div>
+
     )
 }
 

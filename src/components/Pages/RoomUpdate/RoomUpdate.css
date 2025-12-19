@@ -9,7 +9,10 @@
 .form textarea {
     border: 1px solid #ddd;
 }
-
+.form select{
+    padding: 12px;
+    border-radius: 10px;
+}
 .form input:focus,
 .form textarea:focus,
 .form select:focus {
