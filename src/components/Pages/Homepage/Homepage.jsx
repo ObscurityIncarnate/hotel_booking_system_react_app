@@ -41,7 +41,7 @@ function Homepage() {
         }, 10000)
 
         return () => clearTimeout(timeout)
-    }, [branches.length])
+    }, [branches.length, swiping, currentBranch])
 
     const handleClick = () => {
         navigate(`/branches/${branches[currentBranch].id}/rooms`)
