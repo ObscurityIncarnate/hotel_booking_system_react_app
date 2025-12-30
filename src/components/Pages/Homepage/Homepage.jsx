@@ -47,7 +47,7 @@ function Homepage() {
     }
     const handleMouseUp = (e) => {
         if (swiping) {
-            finalPos = [e.pageX, e.pageY]
+            const finalPos = [e.pageX, e.pageY]
             if (finalPos[0] - startingPos[0] > 50) {
                 setCurrentBranch(prev => (prev + 1) % branches.length)
             } else if (finalPos[0] - startingPos[0] < -50) {
