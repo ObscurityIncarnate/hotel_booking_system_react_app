@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { UserContext } from "../../../contexts/UserContext"
 import { branchesIndex } from "../../../services/branches"
 import LoadingIcon from "../../PageElements/LoadingIcon/LoadingIcon"
@@ -34,14 +34,15 @@ function Homepage() {
         getBranches()
     }, [])
     useEffect(() => {
-        if (!(branches.length > 0)) return
+        if (!branches || !(branches.length > 0) || swiping) return
 
-        const interval = setInterval(() => {
+        const timeout = setTimeout(() => {
             setCurrentBranch(prev => (prev + 1) % branches.length)
         }, 10000)
 
-        return () => clearInterval(interval)
+        return () => clearTimeout(timeout)
     }, [branches.length])
+
     const handleClick = () => {
         navigate(`/branches/${branches[currentBranch].id}/rooms`)
     }
@@ -69,7 +70,7 @@ function Homepage() {
         return (
             <div className="branchGallery overlay-content"
                 style={{ backgroundImage: `url(${bgImage})`, }}
-                onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
+                onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onTouchStart={handleMouseDown} onTouchEnd={handleMouseUp}>
                 <h1>{branch.name}</h1>
                 <button onClick={handleClick}>Explore</button>
             </div>
