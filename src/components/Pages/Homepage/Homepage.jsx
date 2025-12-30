@@ -51,7 +51,7 @@ function Homepage() {
             if (finalPos[0] - startingPos[0] > 50) {
                 setCurrentBranch(prev => (prev + 1) % branches.length)
             } else if (finalPos[0] - startingPos[0] < -50) {
-                setCurrentBranch(prev => (prev - 1) % branches.length)
+                setCurrentBranch(prev => (((prev - 1) % branches.length) +branches.length)%branches.length)
             } else {
                 handleClick()
             }
