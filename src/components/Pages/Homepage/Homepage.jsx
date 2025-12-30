@@ -13,6 +13,8 @@ function Homepage() {
     const [errorData, setErrorData] = useState({})
     const [branches, setBranches] = useState({})
     const [currentBranch, setCurrentBranch] = useState(0)
+    const [startingPos, setStartingPos] = useState([])
+    const [swiping, setSwiping] = useState(false)
     useEffect(() => {
         const getBranches = async () => {
             try {
@@ -32,7 +34,7 @@ function Homepage() {
         getBranches()
     }, [])
     useEffect(() => {
-        if (!branches.length > 0) return
+        if (!(branches.length > 0)) return
 
         const interval = setInterval(() => {
             setCurrentBranch(prev => (prev + 1) % branches.length)
@@ -43,13 +45,31 @@ function Homepage() {
     const handleClick = () => {
         navigate(`/branches/${branches[currentBranch].id}/rooms`)
     }
+    const handleMouseUp = (e) => {
+        if (swiping) {
+            finalPos = [e.pageX, e.pageY]
+            if (finalPos[0] - startingPos[0] > 50) {
+                setCurrentBranch(prev => (prev + 1) % branches.length)
+            } else if (finalPos[0] - startingPos[0] < -50) {
+                setCurrentBranch(prev => (prev - 1) % branches.length)
+            } else {
+                handleClick()
+            }
+        }
+
+        setSwiping(false)
+    }
+    const handleMouseDown = (e) => {
+        setStartingPos([e.pageX, e.pageY])
+        setSwiping(true)
+    }
     const carouselBranches = () => {
         const branch = branches[currentBranch]
         const bgImage = branch.images[0] || placeholder
         return (
             <div className="branchGallery overlay-content"
-            style={{backgroundImage: `url(${bgImage})`,}}
-            onClick={handleClick}>
+                style={{ backgroundImage: `url(${bgImage})`, }}
+                onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
                 <h1>{branch.name}</h1>
                 <button onClick={handleClick}>Explore</button>
             </div>
@@ -64,9 +84,9 @@ function Homepage() {
                     <LoadingIcon></LoadingIcon> :
                     <div className="body">
                         {branches && branches.length > 0 ?
-                    
+
                             carouselBranches()
-                             :
+                            :
                             <p>No Branches found</p>
 
                         }
