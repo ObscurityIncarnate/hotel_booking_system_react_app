@@ -27,3 +27,19 @@
     padding: 20px 40px;
     border-radius: 10px;
 }
+
+/*
+Source - https://stackoverflow.com/a
+Posted by Blowsie, modified by community. See post 'Timeline' for change history
+Retrieved 2025-12-30, License - CC BY-SA 4.0
+*/
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
