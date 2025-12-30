@@ -71,7 +71,7 @@ function Homepage() {
             <div className="branchGallery overlay-content"
                 style={{ backgroundImage: `url(${bgImage})`, }}
                 onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onTouchStart={handleMouseDown} onTouchEnd={handleMouseUp}>
-                <h1 className="noSelect">{branch.name}</h1>
+                <h1 className="noselect">{branch.name}</h1>
                 <button onClick={handleClick}>Explore</button>
             </div>
         )
